@@ -21,6 +21,7 @@
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Inicio</a></li>
                     <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#galeria">Galería</a></li>
                     <li><a href="#empresas">Empresas</a></li>
                     <li><a href="#proyectos">Proyectos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
@@ -30,6 +31,7 @@
     </nav>
 
 
+    <main class="horizontal-scroll" id="pageScroller">
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
@@ -40,7 +42,10 @@
             <a href="#servicios" class="btn btn-primary">Conoce nuestros servicios</a>
         </div>
         <!-- Imagen hero.png mantiene su posición original a la derecha -->
-        <img src="assets/hero.png" alt="Hero" class="hero-image">
+        <div class="hero-visual">
+            <img src="assets/hero.png" alt="Hero" class="hero-image">
+            <a href="#servicios" class="scroll-arrow" aria-label="Ir a servicios"></a>
+        </div>
     </section>
 
     <!-- Servicios Section -->
@@ -89,6 +94,38 @@
                     <img src="assets/Construction (1).jpg" alt="Construcción" class="servicio-image">
                     <h3>Construcción</h3>
                     <p>Construcción de proyectos nuevos con tecnología moderna</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Section -->
+    <section id="galeria" class="galeria-3d">
+        <div class="container galeria-container">
+            <h2>Galería de proyectos</h2>
+            <div class="carousel-scene" aria-label="Carrusel de imágenes de proyectos">
+                <div class="carousel-ring">
+                    <figure class="carousel-card" style="--i: 0">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.30 PM.jpeg" alt="Proyecto de construcción 1">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 1">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.30 PM (1).jpeg" alt="Proyecto de construcción 2">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 2">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.30 PM (2).jpeg" alt="Proyecto de construcción 3">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 3">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.30 PM (3).jpeg" alt="Proyecto de construcción 4">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 4">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.30 PM (4).jpeg" alt="Proyecto de construcción 5">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 5">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.31 PM.jpeg" alt="Proyecto de construcción 6">
+                    </figure>
+                    <figure class="carousel-card" style="--i: 6">
+                        <img src="carrusel imagenes/WhatsApp Image 2026-04-08 at 11.50.54 PM.jpeg" alt="Proyecto de construcción 7">
+                    </figure>
                 </div>
             </div>
         </div>
@@ -179,16 +216,12 @@
     </section>
 
     <!-- Contacto Section -->
-    <section id="contacto" class="contacto">
+    <footer id="contacto" class="footer contacto">
         <div class="container">
-            <h2>Contacto</h2>
+            <div class="contacto-content">
+                <h2>Contacto</h2>
             <p>¿Tienes un proyecto en mente? Contáctanos para más información</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+            </div>
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>B.E.R Diseño y Construcción</h4>
@@ -214,6 +247,7 @@
             </div>
         </div>
     </footer>
+    </main>
 
     <!-- Botón WhatsApp flotante -->
     <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Estoy%20interesado%20en%20sus%20servicios" class="whatsapp-btn" aria-label="Contactar por WhatsApp">
