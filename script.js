@@ -175,6 +175,6 @@ document.addEventListener("click", (e) => {
 
 // WhatsApp Button - Reemplaza 'YOUR_PHONE_NUMBER' con tu número
 // Ejemplo: +34123456789 (incluye el código del país)
-const whatsappPhone = "YOUR_PHONE_NUMBER"
+const whatsappPhone = "573007515484"
 const whatsappBtn = document.querySelector(".whatsapp-btn")
 whatsappBtn.href = `https://wa.me/${whatsappPhone}?text=Estoy%20interesado%20en%20sus%20servicios`
