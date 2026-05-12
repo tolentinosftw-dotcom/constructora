@@ -762,11 +762,13 @@ body {
         padding: 36px 0;
     }
     .servicios .container,
-    .empresas .container {
+    .empresas .container,
+    .proyectos .container {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        overflow: hidden;
     }
     .servicios-grid,
     .empresas-grid {
@@ -783,6 +785,11 @@ body {
     .servicios-grid {
         grid-template-rows: repeat(2, minmax(0, 1fr));
         grid-auto-columns: minmax(240px, 42vw);
+        width: max-content;
+        overflow: visible;
+        padding-bottom: 0;
+        scroll-snap-type: none;
+        animation: mobile-services-carousel 14s ease-in-out infinite alternate;
     }
     .empresas-grid {
         grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -790,7 +797,7 @@ body {
     }
     .servicios-grid::-webkit-scrollbar,
     .empresas-grid::-webkit-scrollbar {
-        height: 8px;
+        display: none;
     }
     .servicios-grid::-webkit-scrollbar-thumb,
     .empresas-grid::-webkit-scrollbar-thumb {
@@ -824,10 +831,15 @@ body {
     .proyectos-grid {
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: minmax(220px, 1fr);
+        grid-auto-columns: minmax(260px, 42vw);
         grid-template-rows: repeat(2, minmax(0, 1fr));
         gap: 18px;
+        width: max-content;
+        overflow: visible;
+        padding-bottom: 0;
+        scroll-snap-type: none;
         touch-action: pan-y;
+        animation: mobile-projects-carousel 16s ease-in-out infinite alternate;
     }
     .proyecto-card {
         min-width: 0;
@@ -889,5 +901,37 @@ body {
     }
     .proyecto-card {
         min-width: 0;
+    }
+    .proyectos-grid {
+        grid-auto-columns: 82vw;
+    }
+}
+
+@keyframes mobile-services-carousel {
+    0%,
+    12% {
+        transform: translateX(0);
+    }
+    88%,
+    100% {
+        transform: translateX(calc(-100% + 100vw - 40px));
+    }
+}
+
+@keyframes mobile-projects-carousel {
+    0%,
+    12% {
+        transform: translateX(0);
+    }
+    88%,
+    100% {
+        transform: translateX(calc(-100% + 100vw - 40px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+    .servicios-grid,
+    .proyectos-grid {
+        animation: none;
     }
 }
