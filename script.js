@@ -123,32 +123,112 @@ if (carouselScene && carouselRing) {
     }, { passive: false })
 }
 
-document.querySelectorAll(".mobile-carousel-controls").forEach((controlGroup) => {
-    controlGroup.addEventListener("click", (e) => {
-        const button = e.target.closest("button[data-carousel-speed]")
+document.querySelectorAll(".servicios-grid, .proyectos-grid").forEach((mobileCarousel) => {
+    let isDragging = false
+    let dragStarted = false
+    let startX = 0
+    let startY = 0
+    let startOffset = 0
+    let currentOffset = 0
+    let lastX = 0
+    let lastTime = 0
+    let velocity = 0
+    let momentumFrame = null
 
-        if (!button) {
+    const getLimit = () => {
+        const container = mobileCarousel.parentElement
+
+        if (!container) {
+            return 0
+        }
+
+        return Math.min(0, container.clientWidth - mobileCarousel.scrollWidth)
+    }
+
+    const clampOffset = (value) => Math.max(getLimit(), Math.min(0, value))
+
+    const setOffset = (value) => {
+        currentOffset = clampOffset(value)
+        mobileCarousel.style.transform = `translateX(${currentOffset}px)`
+    }
+
+    const stopMomentum = () => {
+        if (momentumFrame) {
+            cancelAnimationFrame(momentumFrame)
+            momentumFrame = null
+        }
+    }
+
+    const runMomentum = () => {
+        if (Math.abs(velocity) < 0.15) {
             return
         }
 
-        const carousel = document.querySelector(button.dataset.carouselTarget)
+        setOffset(currentOffset + velocity)
+        velocity *= 0.92
+        momentumFrame = requestAnimationFrame(runMomentum)
+    }
 
-        if (!carousel) {
+    mobileCarousel.addEventListener("pointerdown", (e) => {
+        if (isDesktopScroll()) {
             return
         }
 
-        controlGroup.querySelectorAll("button").forEach((controlButton) => {
-            controlButton.classList.toggle("active", controlButton === button)
-        })
-
-        if (button.dataset.carouselSpeed === "pause") {
-            carousel.style.animationPlayState = "paused"
-            return
-        }
-
-        carousel.style.animationPlayState = "running"
-        carousel.style.animationDuration = button.dataset.carouselSpeed === "slow" ? "28s" : "8s"
+        stopMomentum()
+        isDragging = true
+        dragStarted = false
+        startX = e.clientX
+        startY = e.clientY
+        startOffset = currentOffset
+        lastX = e.clientX
+        lastTime = performance.now()
+        velocity = 0
     })
+
+    mobileCarousel.addEventListener("pointermove", (e) => {
+        if (!isDragging || isDesktopScroll()) {
+            return
+        }
+
+        const deltaX = e.clientX - startX
+        const deltaY = e.clientY - startY
+
+        if (!dragStarted && Math.abs(deltaY) > Math.abs(deltaX)) {
+            isDragging = false
+            return
+        }
+
+        if (Math.abs(deltaX) < 6 && !dragStarted) {
+            return
+        }
+
+        dragStarted = true
+        mobileCarousel.classList.add("dragging")
+
+        const now = performance.now()
+        const deltaTime = Math.max(now - lastTime, 16)
+        velocity = ((e.clientX - lastX) / deltaTime) * 16
+        lastX = e.clientX
+        lastTime = now
+        setOffset(startOffset + deltaX)
+    })
+
+    const finishDrag = () => {
+        if (!isDragging) {
+            return
+        }
+
+        isDragging = false
+        mobileCarousel.classList.remove("dragging")
+
+        if (dragStarted) {
+            runMomentum()
+        }
+    }
+
+    mobileCarousel.addEventListener("pointerup", finishDrag)
+    mobileCarousel.addEventListener("pointercancel", finishDrag)
+    window.addEventListener("resize", () => setOffset(currentOffset))
 })
 
 hamburger.addEventListener("click", () => {
