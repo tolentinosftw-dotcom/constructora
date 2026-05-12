@@ -2,12 +2,14 @@
 const hamburger = document.getElementById("hamburger")
 const navLinks = document.getElementById("navLinks")
 const pageScroller = document.getElementById("pageScroller")
-let touchStartX = 0
-let touchStartY = 0
-let lastTouchY = 0
+const isDesktopScroll = () => window.matchMedia("(min-width: 769px)").matches
 
 if (pageScroller) {
     pageScroller.addEventListener("wheel", (e) => {
+        if (!isDesktopScroll()) {
+            return
+        }
+
         if (e.target.closest(".carousel-scene")) {
             return
         }
@@ -32,30 +34,6 @@ if (pageScroller) {
             left: e.deltaY,
             behavior: "smooth",
         })
-    }, { passive: false })
-
-    pageScroller.addEventListener("touchstart", (e) => {
-        touchStartX = e.touches[0].clientX
-        touchStartY = e.touches[0].clientY
-        lastTouchY = touchStartY
-    }, { passive: true })
-
-    pageScroller.addEventListener("touchmove", (e) => {
-        if (e.target.closest(".carousel-scene")) {
-            return
-        }
-
-        const currentX = e.touches[0].clientX
-        const currentY = e.touches[0].clientY
-        const totalX = currentX - touchStartX
-        const totalY = currentY - touchStartY
-        const stepY = lastTouchY - currentY
-
-        if (Math.abs(totalY) > Math.abs(totalX)) {
-            e.preventDefault()
-            pageScroller.scrollLeft += stepY * 1.4
-            lastTouchY = currentY
-        }
     }, { passive: false })
 }
 
@@ -166,15 +144,24 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
         const target = document.querySelector(targetId)
 
-        if (!target || !pageScroller) {
+        if (!target) {
             return
         }
 
         e.preventDefault()
+
+        if (isDesktopScroll() && pageScroller) {
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "start",
+            })
+            return
+        }
+
         target.scrollIntoView({
             behavior: "smooth",
-            block: "nearest",
-            inline: "start",
+            block: "start",
         })
     })
 })
