@@ -321,6 +321,10 @@ body {
     font-size: 14px;
 }
 
+.mobile-carousel-controls {
+    display: none;
+}
+
 
 /* Galería 3D */
 
@@ -755,6 +759,27 @@ body {
     .proyectos h2,
     .contacto h2 {
         font-size: 28px;
+        margin-bottom: 18px;
+    }
+    .mobile-carousel-controls {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 0 16px;
+    }
+    .mobile-carousel-controls button {
+        border: 1px solid rgba(220, 20, 60, 0.28);
+        border-radius: 999px;
+        background: white;
+        color: var(--accent-color);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 8px 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .mobile-carousel-controls button.active {
+        background: var(--accent-color);
+        color: white;
     }
     .servicios,
     .empresas,

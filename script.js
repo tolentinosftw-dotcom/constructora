@@ -123,6 +123,34 @@ if (carouselScene && carouselRing) {
     }, { passive: false })
 }
 
+document.querySelectorAll(".mobile-carousel-controls").forEach((controlGroup) => {
+    controlGroup.addEventListener("click", (e) => {
+        const button = e.target.closest("button[data-carousel-speed]")
+
+        if (!button) {
+            return
+        }
+
+        const carousel = document.querySelector(button.dataset.carouselTarget)
+
+        if (!carousel) {
+            return
+        }
+
+        controlGroup.querySelectorAll("button").forEach((controlButton) => {
+            controlButton.classList.toggle("active", controlButton === button)
+        })
+
+        if (button.dataset.carouselSpeed === "pause") {
+            carousel.style.animationPlayState = "paused"
+            return
+        }
+
+        carousel.style.animationPlayState = "running"
+        carousel.style.animationDuration = button.dataset.carouselSpeed === "slow" ? "28s" : "8s"
+    })
+})
+
 hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active")
 })
